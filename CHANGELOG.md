@@ -5,15 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.4] - 2025-11-12
+## [1.2.5] - 2025-11-12
 
 ### Changed
 - **Enhanced resource documentation** - Added disk space footprint info (~1.3GB total) and detailed memory usage breakdown to README
 
 ### Fixed
-- **Missing ip command** - Added iproute2 package to Dockerfile to provide ip command for network detection
 - **Improved IP detection reliability** - Simplified detection methods with better filtering to exclude Docker container IPs (172.x.x.x)
 - **Multiple fallback methods** - Uses hostname filtering, ip route get, and gateway-based detection for more reliable host IP discovery
+
+## [1.2.4] - 2025-11-12
+
+### Fixed
+- **Missing ip command** - Added iproute2 package to Dockerfile to provide ip command for network detection
 
 ## [1.2.3] - 2025-11-12
 
