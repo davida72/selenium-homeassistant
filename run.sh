@@ -60,10 +60,10 @@ if [ -z "$IP_ADDRESS" ]; then
 fi
 
 echo ""
-echo "=============================================="
+echo "====================================================="
 echo "  SELENIUM URL: http://localhost:4444/"
 echo "            or: http://${IP_ADDRESS}:4444/"
-echo "=============================================="
+echo "====================================================="
 echo ""
 echo "NoVNC Session Viewer:"
 echo "  http://localhost:7900/"
