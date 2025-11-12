@@ -21,6 +21,6 @@ privileged:
 apparmor: false
 init: false
 options:
-  vnc_password_required: false
+  Use password to view Selenium sessions: false
 schema:
-  vnc_password_required: bool
+  Use password to view Selenium sessions: bool

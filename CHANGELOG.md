@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reverted schema to simple `bool` format for compatibility
 - Updated maintainer to David Amor
 - **Improved IP detection** - Added multiple fallback methods with private IP range filtering (192.168.*.*, 10.*.*.*, 172.16-31.*.*) to correctly detect host IP address instead of showing placeholder
+- **Readable config label** - Changed option key from "vnc_password_required" to "Use password to view Selenium sessions" for better UX
 
 ## [1.2.0] - 2025-11-12
 

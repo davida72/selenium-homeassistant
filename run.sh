@@ -8,7 +8,7 @@ CONFIG_PATH="/data/options.json"
 VNC_PASSWORD_REQUIRED="false"
 
 if [ -f "$CONFIG_PATH" ]; then
-    VNC_PASSWORD_REQUIRED=$(jq -r '.vnc_password_required // false' $CONFIG_PATH)
+    VNC_PASSWORD_REQUIRED=$(jq -r '.["Use password to view Selenium sessions"] // false' $CONFIG_PATH)
 fi
 
 # Always enable VNC and NoVNC for session viewing
