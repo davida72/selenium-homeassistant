@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-11-12
+
+### Changed
+- **Simplified VNC configuration**: Removed confusing enable_vnc/enable_novnc options
+- **Always-on session viewing**: VNC and NoVNC now enabled by default for easier debugging
+- **New VNC Password option**: Simple toggle to require/disable password (default: no password)
+- **Prominent URL display**: Selenium and NoVNC URLs now shown clearly in logs on startup
+- **Improved documentation**: URLs and configuration explained more clearly
+
+### Added
+- Startup logs now display actual IP address for easy copy-paste
+- Clear indication when password is required and what the default password is
+
+### Breaking Changes
+- Configuration options changed from `enable_vnc`/`enable_novnc` to `vnc_password_required`
+- Requires add-on restart after changing password setting
+
 ## [1.0.3] - 2025-11-12
 
 ### Fixed

@@ -1,59 +1,72 @@
 # Selenium Standalone Add-on Documentation
 
-## Overview
+## Selenium WebDriver URL
 
-This add-on provides Selenium Standalone with Chromium as a shared service for Home Assistant. It's designed to be lightweight and optimized for systems with limited resources.
+Once the add-on is running, Selenium is accessible at:
 
-## Starting the Add-on
+### Primary URL (check your add-on logs for actual IP)
+```
+http://YOUR_IP_ADDRESS:4444/
+```
 
-1. Click **Start** to launch the service
-2. Wait for the status to change to **Started**
-3. Check the logs to confirm Selenium is running
-4. Enable **Start on boot** for automatic startup
-5. Enable **Watchdog** for automatic recovery
-
-## Connecting to Selenium
-
-Once running, Selenium is accessible at:
-
-**From other Home Assistant add-ons:**
+### Alternative URL
 ```
 http://homeassistant.local:4444/
 ```
 
-**From within Docker containers:**
+### WebDriver Hub Endpoint
 ```
-http://localhost:4444/
-```
-
-**WebDriver endpoint:**
-```
-http://homeassistant.local:4444/wd/hub
+http://YOUR_IP_ADDRESS:4444/wd/hub
 ```
 
-## Configuration
+**The exact URL with your IP address is shown in the add-on logs when it starts.**
 
-### Viewing Browser Sessions (Optional)
+---
 
-By default, the add-on runs in headless mode without session viewing. You can enable live viewing of browser sessions for debugging:
+## Getting Started
 
-1. Go to the **Configuration** tab
-2. Enable one or both viewing options:
-   - **enable_novnc**: Web-based viewer (recommended) - `http://homeassistant.local:7900/`
-   - **enable_vnc**: VNC server on port 5900 (requires VNC client)
-3. Click **Save**
-4. Restart the add-on
+1. Click **Start** to launch the service
+2. Wait for the status to change to **Started**
+3. Go to the **Log** tab to see your Selenium URLs
+4. Copy the URL shown (e.g., `http://192.168.1.100:4444/`)
+5. Use this URL in your scripts or other add-ons
 
-**No password required** - Sessions are accessible without authentication for easy debugging.
+### Enable Auto-Start (Recommended)
+- **Start on boot**: Add-on starts automatically with Home Assistant
+- **Watchdog**: Automatic restart if the add-on crashes
 
-### When to Enable Session Viewing
+---
 
-- Debugging scripts that aren't working as expected
-- Watching automation in real-time
-- Verifying element interactions
-- Troubleshooting login flows
+## Configuration Options
 
-**Note**: Enabling viewing increases resource usage. Disable when not needed.
+### VNC Password Required
+
+**Default: OFF (No password required)**
+
+Controls whether a password is required to view browser sessions via NoVNC.
+
+- **OFF (Default)**: No password required - access sessions immediately
+- **ON**: Password required (default password is `secret`)
+
+**Important**: Changing this setting requires restarting the add-on to take effect.
+
+### Viewing Browser Sessions
+
+The add-on includes NoVNC for viewing live browser sessions in your web browser:
+
+**NoVNC Web Viewer URL:**
+```
+http://YOUR_IP_ADDRESS:7900/
+http://homeassistant.local:7900/
+```
+
+**Use Cases:**
+- Debug scripts that aren't working
+- Watch automation run in real-time
+- Verify element interactions
+- Troubleshoot login flows
+
+**Access**: Open the NoVNC URL in your browser while a Selenium session is active.
 
 ## Common Use Cases
 

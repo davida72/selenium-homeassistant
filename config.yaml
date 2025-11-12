@@ -1,5 +1,5 @@
 name: Selenium Standalone
-version: "1.0.3"
+version: "1.1.0"
 slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:
@@ -21,8 +21,6 @@ privileged:
 apparmor: false
 init: false
 options:
-  enable_vnc: false
-  enable_novnc: false
+  vnc_password_required: false
 schema:
-  enable_vnc: bool
-  enable_novnc: bool
+  vnc_password_required: bool?

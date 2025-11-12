@@ -36,39 +36,47 @@ This add-on runs Selenium Standalone with Chromium in a Docker container, making
 3. Enable **Start on boot** if you want it to start automatically
 4. Enable **Watchdog** to automatically restart if it crashes
 
-## Configuration
-
-This add-on works out of the box with optimized settings, but offers optional configuration for session viewing:
-
-### Optional Settings
-
-- **enable_vnc**: Enable VNC server for viewing browser sessions (default: `false`)
-- **enable_novnc**: Enable NoVNC web interface for viewing sessions in your browser (default: `false`)
-
-To enable session viewing:
-1. Go to the add-on **Configuration** tab
-2. Enable **enable_novnc** for browser-based viewing (recommended)
-3. Click **Save** and restart the add-on
-4. Access sessions at `http://homeassistant.local:7900/` (no password required)
-
 ## Usage
 
-Once the add-on is running, other add-ons and services can connect to Selenium using:
+After starting the add-on, check the **Log** tab to see your Selenium URL. It will look like:
 
 ```
-http://homeassistant.local:4444/
+SELENIUM WEBDRIVER URL:
+  http://192.168.1.100:4444/
+  http://homeassistant.local:4444/
 ```
 
-Or from within Home Assistant containers:
-
-```
-http://localhost:4444/
-```
+Use this URL in your scripts and other add-ons.
 
 ### Example: UK Bin Collection Data Add-on
 
-When configuring the UK Bin Collection Data add-on, use:
-- **Selenium URL**: `http://homeassistant.local:4444/`
+When configuring the UK Bin Collection Data add-on, use the URL from your logs:
+- **Selenium URL**: `http://192.168.1.100:4444/` (or `http://homeassistant.local:4444/`)
+
+### Viewing Browser Sessions
+
+The add-on includes NoVNC for watching browser sessions in real-time. Check your logs for the NoVNC URL:
+
+```
+SESSION VIEWING (NoVNC):
+  http://192.168.1.100:7900/
+  http://homeassistant.local:7900/
+```
+
+Open this URL in your browser to watch Selenium sessions live.
+
+## Configuration
+
+### VNC Password Required
+
+**Default: OFF (no password required)**
+
+Controls whether a password is needed to view browser sessions:
+
+- **OFF (Default)**: No password - access NoVNC immediately
+- **ON**: Password required (default password is `secret`)
+
+**Note**: Restart the add-on after changing this setting.
 
 ## Resource Optimization
 

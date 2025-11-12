@@ -4,34 +4,49 @@ set -e
 # Read configuration from Home Assistant
 CONFIG_PATH="/data/options.json"
 
-# Read VNC and NoVNC options (default to false if not set)
-ENABLE_VNC="false"
-ENABLE_NOVNC="false"
+# Read VNC password option (default to false = no password required)
+VNC_PASSWORD_REQUIRED="false"
 
 if [ -f "$CONFIG_PATH" ]; then
-    ENABLE_VNC=$(jq -r '.enable_vnc // false' $CONFIG_PATH)
-    ENABLE_NOVNC=$(jq -r '.enable_novnc // false' $CONFIG_PATH)
+    VNC_PASSWORD_REQUIRED=$(jq -r '.vnc_password_required // false' $CONFIG_PATH)
 fi
 
-# Set VNC environment variables based on configuration
-export SE_START_VNC="${ENABLE_VNC}"
-export SE_START_NO_VNC="${ENABLE_NOVNC}"
+# Always enable VNC and NoVNC for session viewing
+export SE_START_VNC="true"
+export SE_START_NO_VNC="true"
+
+# Set password based on configuration
+# If VNC_PASSWORD_REQUIRED is false (default), then SE_VNC_NO_PASSWORD=1 (no password)
+# If VNC_PASSWORD_REQUIRED is true, then SE_VNC_NO_PASSWORD=0 (password required, default is "secret")
+if [ "${VNC_PASSWORD_REQUIRED}" = "true" ]; then
+    export SE_VNC_NO_PASSWORD="0"
+    VNC_PASSWORD_STATUS="REQUIRED (default password: 'secret')"
+else
+    export SE_VNC_NO_PASSWORD="1"
+    VNC_PASSWORD_STATUS="DISABLED (no password required)"
+fi
+
+# Get the IP address for display
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
 
 echo "============================================"
-echo "Starting Selenium Standalone Service"
+echo "Selenium Standalone Service Starting"
 echo "============================================"
+echo ""
+echo "SELENIUM WEBDRIVER URL:"
+echo "  http://${IP_ADDRESS}:4444/"
+echo "  http://homeassistant.local:4444/"
+echo ""
+echo "SESSION VIEWING (NoVNC):"
+echo "  http://${IP_ADDRESS}:7900/"
+echo "  http://homeassistant.local:7900/"
+echo "  VNC Password: ${VNC_PASSWORD_STATUS}"
+echo ""
 echo "Configuration:"
 echo "  Max Sessions: ${SE_NODE_MAX_SESSIONS}"
 echo "  Session Timeout: ${SE_NODE_SESSION_TIMEOUT}s"
-echo "  Memory Limit: ${JAVA_OPTS}"
-echo "  WebDriver Port: 4444"
-echo "  VNC Enabled: ${SE_START_VNC}"
-echo "  NoVNC Enabled: ${SE_START_NO_VNC}"
-if [ "${SE_START_VNC}" = "true" ] || [ "${SE_START_NO_VNC}" = "true" ]; then
-    echo "  VNC Password: DISABLED (no password required)"
-    [ "${SE_START_VNC}" = "true" ] && echo "  VNC Port: 5900"
-    [ "${SE_START_NO_VNC}" = "true" ] && echo "  NoVNC Port: 7900 (http://homeassistant.local:7900)"
-fi
+echo "  Java Memory: ${JAVA_OPTS}"
+echo ""
 echo "============================================"
 
 # Start Selenium Server using the original entry point
