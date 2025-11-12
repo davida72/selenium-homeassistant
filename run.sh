@@ -43,26 +43,33 @@ SELENIUM_PID=$!
 sleep 5
 
 # Get the Home Assistant host IP address
-# Method 1: Use Supervisor API (best method for Home Assistant add-ons)
-IP_ADDRESS=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[] | split("/")[0]' 2>/dev/null | head -1)
+IP_ADDRESS=""
 
-# Method 2: Try to get default gateway and use its network
+# Method 1: Try Supervisor API (if available)
+if [ -n "$SUPERVISOR_TOKEN" ]; then
+    IP_ADDRESS=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
+fi
+
+# Method 2: Try hostname command and filter out Docker IPs
 if [ -z "$IP_ADDRESS" ]; then
-    GATEWAY=$(ip route | grep default | awk '{print $3}' | head -1)
+    IP_ADDRESS=$(hostname -I 2>/dev/null | tr ' ' '\n' | grep -v '^127\.' | grep -v '^172\.[1-3][0-9]\.' | head -1)
+fi
+
+# Method 3: Parse ip route for default route source IP
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS=$(ip route get 8.8.8.8 2>/dev/null | grep -oP 'src \K[\d.]+' | head -1)
+fi
+
+# Method 4: Get default gateway and infer host IP
+if [ -z "$IP_ADDRESS" ]; then
+    GATEWAY=$(ip route 2>/dev/null | grep default | awk '{print $3}' | head -1)
     if [ -n "$GATEWAY" ]; then
-        # Extract the first 3 octets from gateway (e.g., 192.168.200 from 192.168.200.1)
         NETWORK_PREFIX=$(echo "$GATEWAY" | cut -d. -f1-3)
-        # Get IP from same network, excluding Docker networks (172.17-31.x.x)
-        IP_ADDRESS=$(ip -4 addr show | grep -oP "(?<=inet\s)${NETWORK_PREFIX}\.\d+" | head -1)
+        IP_ADDRESS=$(ip addr 2>/dev/null | grep "inet ${NETWORK_PREFIX}" | head -1 | awk '{print $2}' | cut -d'/' -f1)
     fi
 fi
 
-# Method 3: Get first non-Docker, non-loopback IP
-if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | grep -v '^172\.(1[7-9]|2[0-9]|3[0-1])\.' | grep -E '^192\.|^10\.' | head -1)
-fi
-
-# If still nothing, show placeholder
+# Final fallback
 if [ -z "$IP_ADDRESS" ]; then
     IP_ADDRESS="YOUR_IP_ADDRESS"
 fi

@@ -86,12 +86,22 @@ If you want to require a password before viewing browser sessions:
 
 ## Resource Optimization
 
-This add-on is optimized for low resource usage with the following settings:
+This add-on is optimized for low resource usage:
 
+### Memory Usage
+- **Idle**: ~100-200MB (server running, no sessions)
+- **Active (1-2 sessions)**: ~300-500MB (typical usage)
+- **Max (3 sessions)**: ~400MB-1GB (all sessions active)
+
+### Disk Space
+- **Docker Image**: ~1.2GB (includes Chromium browser and Selenium)
+- **Runtime Data**: Minimal (~10-50MB for logs and temporary files)
+- **Total**: ~1.3GB disk space required
+
+### Configuration
 - **Max Sessions**: 3 concurrent sessions
 - **Session Timeout**: 300 seconds (5 minutes)
 - **Java Memory**: 256MB min, 512MB max
-- **VNC Disabled**: No VNC server running to save resources
 - **Log Level**: WARNING (reduced logging overhead)
 
 ## Technical Details
