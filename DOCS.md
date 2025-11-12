@@ -179,11 +179,9 @@ This add-on uses **Chromium** rather than Google Chrome for several key advantag
 
 ### Expected Memory Usage
 
-| Component | RAM Usage | Notes |
-|-----------|-----------|-------|
-| Selenium Server (base) | ~100-200MB | Idle server with no sessions |
-| Each Browser Session | ~100-300MB | Varies based on website complexity |
-| **Total (3 sessions)** | **~400MB-1GB** | Maximum with all sessions active |
+- **Selenium Server (base)**: ~100-200MB when idle with no sessions
+- **Each Browser Session**: ~100-300MB (varies based on website complexity)
+- **Total with 3 sessions**: ~400MB-1GB maximum with all sessions active
 
 **Typical real-world usage**: 300-500MB with 1-2 active sessions
 
@@ -191,12 +189,10 @@ This add-on uses **Chromium** rather than Google Chrome for several key advantag
 
 The add-on is configured for minimal resource consumption:
 
-| Setting | Value | Purpose |
-|---------|-------|---------|
-| Max Sessions | 3 | Limits concurrent browser sessions |
-| Session Timeout | 300s | Closes idle sessions after 5 minutes |
-| Java Memory | 256-512MB | Caps Java heap size |
-| Log Level | WARNING | Reduces log overhead |
+- **Max Sessions**: 3 concurrent browser sessions maximum
+- **Session Timeout**: 300 seconds - closes idle sessions after 5 minutes
+- **Java Memory**: 256-512MB - caps Java heap size
+- **Log Level**: WARNING - reduces log overhead
 
 ### Automatic Updates
 
@@ -259,9 +255,9 @@ To view logs:
 
 ## Port Information
 
-| Port | Protocol | Purpose |
-|------|----------|---------|
-| 4444 | TCP | Selenium WebDriver API |
+- **Port 4444** (TCP): Selenium WebDriver API
+- **Port 5900** (TCP): VNC Server (for session viewing)
+- **Port 7900** (TCP): Web-based session viewer
 
 ## Support
 
