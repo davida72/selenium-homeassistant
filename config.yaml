@@ -1,5 +1,5 @@
 name: Selenium Standalone
-version: "1.2.1"
+version: "1.2.2"
 slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:

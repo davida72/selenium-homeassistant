@@ -5,21 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] - 2025-11-12
-
-### Fixed
-- **Critical: Add-on not appearing in store** - Fixed invalid schema format that prevented Home Assistant from loading the add-on
-- Reverted schema to simple `bool` format for compatibility
-- Updated maintainer to David Amor
-- **Improved IP detection** - Added multiple fallback methods with private IP range filtering (192.168.*.*, 10.*.*.*, 172.16-31.*.*) to correctly detect host IP address instead of showing placeholder
-- **Readable config label** - Changed option key from "vnc_password_required" to "Use password to view Selenium sessions" for better UX
-- **Box alignment** - Adjusted separator line to 46 characters for consistent formatting
+## [1.2.2] - 2025-11-12
 
 ### Changed
 - **Enhanced documentation** - Added comprehensive "What is Selenium?" section explaining browser automation, platform compatibility, and use cases
 - **Resource footprint details** - Added expected RAM usage (300-500MB typical, up to 1GB with 3 sessions), explained Chromium vs Chrome benefits
 - **Update process clarification** - Documented that reinstalling pulls latest Selenium/Chromium versions automatically
 - **VNC password instructions** - Clarified that changing VNC password only requires restart, not reinstall
+- **Simplified language** - Removed technical "NoVNC" jargon, renamed to "Watch Browser Sessions Live"
+- **Better table formatting** - Converted tables to bullet lists for improved rendering in Home Assistant
+
+### Fixed
+- **Improved IP detection** - Added multiple fallback methods with private IP range filtering (192.168.*.*, 10.*.*.*, 172.16-31.*.*)
+- **Readable config label** - Changed option key from "vnc_password_required" to "Use password to view Selenium sessions"
+- **Box alignment** - Adjusted separator line to 46 characters for consistent formatting
+
+## [1.2.1] - 2025-11-12
+
+### Fixed
+- **Critical: Add-on not appearing in store** - Fixed invalid schema format that prevented Home Assistant from loading the add-on
+- Reverted schema to simple `bool` format for compatibility
+- Updated maintainer to David Amor
 
 ## [1.2.0] - 2025-11-12
 
