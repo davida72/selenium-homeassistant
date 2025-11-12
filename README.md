@@ -41,10 +41,10 @@ This add-on runs Selenium Standalone with Chromium in a Docker container, making
 After starting the add-on, check the **Log** tab to see your Selenium URL prominently displayed:
 
 ```
-**********************************************
-* Selenium URL: http://localhost:4444/       *
-*           or: http://192.168.200.234:4444/ *
-**********************************************
+==============================================
+  SELENIUM URL: http://localhost:4444/
+            or: http://192.168.200.234:4444/
+==============================================
 ```
 
 ### For Home Assistant Add-ons

@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated maintainer to David Amor
 - **Improved IP detection** - Added multiple fallback methods with private IP range filtering (192.168.*.*, 10.*.*.*, 172.16-31.*.*) to correctly detect host IP address instead of showing placeholder
 - **Readable config label** - Changed option key from "vnc_password_required" to "Use password to view Selenium sessions" for better UX
+- **Box alignment** - Adjusted separator line to 46 characters for consistent formatting
+
+### Changed
+- **Enhanced documentation** - Added comprehensive "What is Selenium?" section explaining browser automation, platform compatibility, and use cases
+- **Resource footprint details** - Added expected RAM usage (300-500MB typical, up to 1GB with 3 sessions), explained Chromium vs Chrome benefits
+- **Update process clarification** - Documented that reinstalling pulls latest Selenium/Chromium versions automatically
+- **VNC password instructions** - Clarified that changing VNC password only requires restart, not reinstall
 
 ## [1.2.0] - 2025-11-12
 
