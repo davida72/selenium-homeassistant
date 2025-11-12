@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-11-12
+
+### Changed
+- **Release preparation** - Cleaned up documentation and improved user experience for stable release
+- **Reordered log output** - SELENIUM URL now appears last (after NoVNC) before "Selenium Standalone is ready!" for better visibility
+- **Consistent placeholders** - All documentation now uses "YOUR_HOME_ASSISTANT_IP" placeholder instead of specific example IPs
+- **Simplified approach** - Accepted that IP auto-detection is unreliable in Docker environments; users should use localhost or manually enter their IP
+- **Removed unused dependencies** - Removed curl and iproute2 packages (not needed with simplified IP detection)
+
+### Documentation
+- Updated all references from specific IPs (192.168.x.x) to generic placeholder "YOUR_HOME_ASSISTANT_IP"
+- Clarified that localhost:4444 is the primary URL for internal Home Assistant use
+- README and DOCS now consistently show placeholder format
+
+### Technical
+- Cleaner Docker image with only essential packages (jq for config parsing)
+- Simpler, faster IP detection using only hostname command
+
 ## [1.2.9] - 2025-11-12
 
 ### Changed

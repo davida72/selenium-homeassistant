@@ -60,14 +60,14 @@ if [ -z "$IP_ADDRESS" ]; then
 fi
 
 echo ""
+echo "NoVNC Session Viewer:"
+echo "  http://localhost:7900/"
+echo "  http://${IP_ADDRESS}:7900/"
+echo ""
 echo "====================================================="
 echo "  SELENIUM URL: http://localhost:4444/"
 echo "            or: http://${IP_ADDRESS}:4444/"
 echo "====================================================="
-echo ""
-echo "NoVNC Session Viewer:"
-echo "  http://localhost:7900/"
-echo "  http://${IP_ADDRESS}:7900/"
 echo ""
 echo "Selenium Standalone is ready!"
 echo ""

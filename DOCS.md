@@ -42,9 +42,9 @@ http://localhost:4444/
 
 ### For External Scripts/Tools
 ```
-http://YOUR_IP_ADDRESS:4444/
+http://YOUR_HOME_ASSISTANT_IP:4444/
 ```
-(Check the add-on logs for your actual IP address)
+(Replace YOUR_HOME_ASSISTANT_IP with your actual Home Assistant IP address)
 
 ### WebDriver Hub Endpoint
 ```
@@ -52,7 +52,7 @@ http://localhost:4444/wd/hub
 ```
 or
 ```
-http://YOUR_IP_ADDRESS:4444/wd/hub
+http://YOUR_HOME_ASSISTANT_IP:4444/wd/hub
 ```
 
 **The exact URLs are shown prominently in the add-on logs when it starts.**
@@ -64,7 +64,7 @@ http://YOUR_IP_ADDRESS:4444/wd/hub
 1. Click **Start** to launch the service
 2. Wait for the status to change to **Started**
 3. Go to the **Log** tab to see your Selenium URLs
-4. Copy the URL shown (e.g., `http://192.168.1.100:4444/`)
+4. Copy the URL shown (e.g., `http://YOUR_HOME_ASSISTANT_IP:4444/`)
 5. Use this URL in your scripts or other add-ons
 
 ### Enable Auto-Start (Recommended)
@@ -98,8 +98,8 @@ The add-on includes NoVNC for viewing live browser sessions in your web browser:
 
 **NoVNC Web Viewer URL:**
 ```
-http://YOUR_IP_ADDRESS:7900/
-http://homeassistant.local:7900/
+http://localhost:7900/
+http://YOUR_HOME_ASSISTANT_IP:7900/
 ```
 
 **Use Cases:**

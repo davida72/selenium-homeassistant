@@ -14,12 +14,10 @@ ENV SE_NODE_MAX_SESSIONS=3 \
     SE_OPTS="--log-level WARNING" \
     JAVA_OPTS="-Xmx512m -Xms256m"
 
-# Install bashio for Home Assistant add-on compatibility
+# Install required packages for Home Assistant add-on compatibility
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     jq \
-    curl \
-    iproute2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy run script

@@ -43,7 +43,7 @@ After starting the add-on, check the **Log** tab to see your Selenium URL promin
 ```
 =====================================================
   SELENIUM URL: http://localhost:4444/
-            or: http://192.168.200.234:4444/
+            or: http://YOUR_HOME_ASSISTANT_IP:4444/
 =====================================================
 ```
 
@@ -53,7 +53,7 @@ Use: **`http://localhost:4444/`**
 This works for UK Bin Collection Data, AppDaemon, and any other Home Assistant add-on.
 
 ### For External Scripts
-Use the IP address shown in your logs (e.g., `http://192.168.200.234:4444/`)
+Use your Home Assistant IP address (e.g., `http://YOUR_HOME_ASSISTANT_IP:4444/`)
 
 ### Example: UK Bin Collection Data Add-on
 
@@ -65,7 +65,7 @@ When configuring the UK Bin Collection Data add-on:
 Want to see what Selenium is doing? Open this URL in your web browser to watch the automated browser in real-time:
 
 - **From Home Assistant**: `http://localhost:7900/`
-- **From your network**: Check logs for IP address (e.g., `http://192.168.200.234:7900/`)
+- **From your network**: Use your Home Assistant IP (e.g., `http://YOUR_HOME_ASSISTANT_IP:7900/`)
 
 This is useful for debugging scripts and watching automation run.
 
