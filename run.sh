@@ -45,28 +45,49 @@ sleep 5
 # Get the Home Assistant host IP address
 IP_ADDRESS=""
 
-# Method 1: Try Supervisor API (if available)
+# Method 1: Query Supervisor for Home Assistant Core info (gets the actual HA URL)
 if [ -n "$SUPERVISOR_TOKEN" ]; then
-    IP_ADDRESS=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
-fi
+    # Get Home Assistant info which includes the IP it's running on
+    HA_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/core/info 2>/dev/null)
+    # Try to extract IP from various fields
+    if [ -n "$HA_INFO" ]; then
+        # Try getting from the host field
+        IP_ADDRESS=$(echo "$HA_INFO" | jq -r '.data.ip_address // empty' 2>/dev/null)
 
-# Method 2: Try hostname command and filter out Docker IPs
-if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(hostname -I 2>/dev/null | tr ' ' '\n' | grep -v '^127\.' | grep -v '^172\.[1-3][0-9]\.' | head -1)
-fi
+        # If that didn't work, try getting from network interfaces
+        if [ -z "$IP_ADDRESS" ]; then
+            NETWORK_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null)
+            # Get the primary interface IP
+            IP_ADDRESS=$(echo "$NETWORK_INFO" | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
+        fi
 
-# Method 3: Parse ip route for default route source IP
-if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(ip route get 8.8.8.8 2>/dev/null | grep -oP 'src \K[\d.]+' | head -1)
-fi
-
-# Method 4: Get default gateway and infer host IP
-if [ -z "$IP_ADDRESS" ]; then
-    GATEWAY=$(ip route 2>/dev/null | grep default | awk '{print $3}' | head -1)
-    if [ -n "$GATEWAY" ]; then
-        NETWORK_PREFIX=$(echo "$GATEWAY" | cut -d. -f1-3)
-        IP_ADDRESS=$(ip addr 2>/dev/null | grep "inet ${NETWORK_PREFIX}" | head -1 | awk '{print $2}' | cut -d'/' -f1)
+        # If still nothing, try getting host info
+        if [ -z "$IP_ADDRESS" ]; then
+            HOST_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/host/info 2>/dev/null)
+            IP_ADDRESS=$(echo "$HOST_INFO" | jq -r '.data.ip_address // empty' 2>/dev/null)
+        fi
     fi
+fi
+
+# Method 2: Parse /proc/net/route to find default gateway, then find IP on same network
+if [ -z "$IP_ADDRESS" ] && [ -f /proc/net/route ]; then
+    # Get default gateway from routing table
+    GATEWAY_HEX=$(awk '/^[^\t]+\t00000000\t/ {print $3}' /proc/net/route 2>/dev/null | head -1)
+    if [ -n "$GATEWAY_HEX" ]; then
+        # Convert hex to decimal IP (reverse byte order)
+        GATEWAY=$(printf "%d.%d.%d.%d" 0x${GATEWAY_HEX:6:2} 0x${GATEWAY_HEX:4:2} 0x${GATEWAY_HEX:2:2} 0x${GATEWAY_HEX:0:2} 2>/dev/null)
+        if [ -n "$GATEWAY" ]; then
+            # Get network prefix (first 3 octets)
+            NETWORK_PREFIX=$(echo "$GATEWAY" | cut -d. -f1-3)
+            # Find IP on same network
+            IP_ADDRESS=$(ip addr 2>/dev/null | grep -oP "inet ${NETWORK_PREFIX}\.\d+" | head -1 | awk '{print $2}')
+        fi
+    fi
+fi
+
+# Method 3: Try hostname command and filter out Docker/loopback IPs
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS=$(hostname -I 2>/dev/null | tr ' ' '\n' | grep -v '^127\.' | grep -v '^172\.[1-3][0-9]\.' | grep -v '^169\.254\.' | head -1)
 fi
 
 # Final fallback

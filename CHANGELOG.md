@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.6] - 2025-11-12
+
+### Fixed
+- **IP detection using Supervisor API** - Now queries Home Assistant's own APIs (core/info, network/info, host/info) to get actual host IP
+- **Direct routing table parsing** - Reads /proc/net/route directly to find default gateway without requiring ip command
+- **Better filtering** - Excludes Docker IPs (172.x), loopback (127.x), and link-local (169.254.x) addresses
+
 ## [1.2.5] - 2025-11-12
 
 ### Changed
