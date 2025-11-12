@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-11-12
+
+### Changed
+- **Prioritize localhost URL**: localhost:4444 is now the primary recommended URL for Home Assistant add-ons
+- **Prominent URL display**: URLs now shown in bold box format in logs for easy visibility
+- **Improved config label**: Changed "VNC Password Required" to "Use password to view Selenium sessions"
+- **Better documentation**: Added Selenium logo to README and DOCS for visual appeal
+- **Clearer examples**: All code examples now prioritize localhost for internal use
+
+### Added
+- Visual boxed display of URLs in startup logs
+- Selenium logo in documentation files
+- Distinction between internal (localhost) and external (IP) access
+
 ## [1.1.0] - 2025-11-12
 
 ### Changed

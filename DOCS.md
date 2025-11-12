@@ -1,25 +1,32 @@
 # Selenium Standalone Add-on Documentation
 
+![Selenium Logo](logo.svg)
+
 ## Selenium WebDriver URL
 
-Once the add-on is running, Selenium is accessible at:
+Once the add-on is running, use this URL:
 
-### Primary URL (check your add-on logs for actual IP)
+### For Home Assistant Add-ons (UK Bin Collection Data, etc.)
+```
+http://localhost:4444/
+```
+
+### For External Scripts/Tools
 ```
 http://YOUR_IP_ADDRESS:4444/
 ```
-
-### Alternative URL
-```
-http://homeassistant.local:4444/
-```
+(Check the add-on logs for your actual IP address)
 
 ### WebDriver Hub Endpoint
+```
+http://localhost:4444/wd/hub
+```
+or
 ```
 http://YOUR_IP_ADDRESS:4444/wd/hub
 ```
 
-**The exact URL with your IP address is shown in the add-on logs when it starts.**
+**The exact URLs are shown prominently in the add-on logs when it starts.**
 
 ---
 
@@ -76,17 +83,30 @@ Configure the UK Bin Collection Data add-on to use this Selenium service:
 
 1. Install and start this Selenium Standalone add-on
 2. In UK Bin Collection Data configuration, set:
-   - Selenium URL: `http://homeassistant.local:4444/`
+   - Selenium URL: `http://localhost:4444/`
 3. Save and restart the UK Bin Collection Data add-on
 
 ### Python Selenium Scripts
 
+**From within Home Assistant (AppDaemon, Python Scripts, etc.):**
 ```python
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 driver = webdriver.Remote(
-    command_executor='http://homeassistant.local:4444/wd/hub',
+    command_executor='http://localhost:4444/wd/hub',
+    desired_capabilities=DesiredCapabilities.CHROME
+)
+
+driver.get('https://example.com')
+print(driver.title)
+driver.quit()
+```
+
+**From external network:**
+```python
+driver = webdriver.Remote(
+    command_executor='http://YOUR_HOME_ASSISTANT_IP:4444/wd/hub',
     desired_capabilities=DesiredCapabilities.CHROME
 )
 

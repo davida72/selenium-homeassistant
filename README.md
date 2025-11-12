@@ -1,5 +1,7 @@
 # Selenium Standalone for Home Assistant
 
+![Selenium Logo](logo.svg)
+
 A Home Assistant add-on that provides Selenium Standalone with Chromium as a shared service for other add-ons and integrations.
 
 ## About
@@ -38,32 +40,35 @@ This add-on runs Selenium Standalone with Chromium in a Docker container, making
 
 ## Usage
 
-After starting the add-on, check the **Log** tab to see your Selenium URL. It will look like:
+After starting the add-on, check the **Log** tab to see your Selenium URL prominently displayed:
 
 ```
-SELENIUM WEBDRIVER URL:
-  http://192.168.1.100:4444/
-  http://homeassistant.local:4444/
+**********************************************
+* Selenium URL: http://localhost:4444/       *
+*           or: http://192.168.200.234:4444/ *
+**********************************************
 ```
 
-Use this URL in your scripts and other add-ons.
+### For Home Assistant Add-ons
+Use: **`http://localhost:4444/`**
+
+This works for UK Bin Collection Data, AppDaemon, and any other Home Assistant add-on.
+
+### For External Scripts
+Use the IP address shown in your logs (e.g., `http://192.168.200.234:4444/`)
 
 ### Example: UK Bin Collection Data Add-on
 
-When configuring the UK Bin Collection Data add-on, use the URL from your logs:
-- **Selenium URL**: `http://192.168.1.100:4444/` (or `http://homeassistant.local:4444/`)
+When configuring the UK Bin Collection Data add-on:
+- **Selenium URL**: `http://localhost:4444/`
 
 ### Viewing Browser Sessions
 
-The add-on includes NoVNC for watching browser sessions in real-time. Check your logs for the NoVNC URL:
+The add-on includes NoVNC for watching browser sessions in real-time:
+- **From within Home Assistant**: `http://localhost:7900/`
+- **From your network**: Check logs for IP address (e.g., `http://192.168.200.234:7900/`)
 
-```
-SESSION VIEWING (NoVNC):
-  http://192.168.1.100:7900/
-  http://homeassistant.local:7900/
-```
-
-Open this URL in your browser to watch Selenium sessions live.
+Open the NoVNC URL in your browser to watch Selenium sessions live.
 
 ## Configuration
 

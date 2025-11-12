@@ -29,25 +29,24 @@ fi
 # Get the IP address for display
 IP_ADDRESS=$(hostname -I | awk '{print $1}')
 
-echo "============================================"
-echo "Selenium Standalone Service Starting"
-echo "============================================"
 echo ""
-echo "SELENIUM WEBDRIVER URL:"
-echo "  http://${IP_ADDRESS}:4444/"
-echo "  http://homeassistant.local:4444/"
+echo "**********************************************"
+echo "* Selenium URL: http://localhost:4444/       *"
+echo "*           or: http://${IP_ADDRESS}:4444/ *"
+echo "**********************************************"
 echo ""
-echo "SESSION VIEWING (NoVNC):"
+echo "NoVNC Session Viewer:"
+echo "  http://localhost:7900/"
 echo "  http://${IP_ADDRESS}:7900/"
-echo "  http://homeassistant.local:7900/"
-echo "  VNC Password: ${VNC_PASSWORD_STATUS}"
+echo "  Password: ${VNC_PASSWORD_STATUS}"
 echo ""
 echo "Configuration:"
 echo "  Max Sessions: ${SE_NODE_MAX_SESSIONS}"
 echo "  Session Timeout: ${SE_NODE_SESSION_TIMEOUT}s"
 echo "  Java Memory: ${JAVA_OPTS}"
 echo ""
-echo "============================================"
+echo "Selenium Standalone Service Started"
+echo ""
 
 # Start Selenium Server using the original entry point
 exec /opt/bin/entry_point.sh
