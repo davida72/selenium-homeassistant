@@ -5,12 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2025-11-12
+
+### Fixed
+- **Missing ip command** - Added iproute2 package to Dockerfile to provide ip command for network detection
+- Fixes "/run.sh: line 51: ip: command not found" error
+
 ## [1.2.3] - 2025-11-12
 
 ### Fixed
 - **Critical: IP detection showing Docker IP** - Now uses Supervisor API to get actual host IP instead of container IP (fixes 172.30.x.x showing instead of 192.168.x.x)
 - **Improved fallback methods** - Gateway-based detection and explicit Docker IP range exclusion (172.17-31.x.x)
-- **Missing ip command** - Added iproute2 package to Dockerfile to provide ip command for network detection
 
 ## [1.2.2] - 2025-11-12
 
