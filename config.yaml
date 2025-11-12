@@ -1,5 +1,5 @@
 name: Selenium Standalone
-version: "1.0.0"
+version: "1.0.1"
 slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:
@@ -28,4 +28,3 @@ options:
 schema:
   enable_vnc: bool
   enable_novnc: bool
-image: ghcr.io/davida72/{arch}-selenium-standalone
