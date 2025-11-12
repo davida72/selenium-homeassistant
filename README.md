@@ -1,7 +1,5 @@
 # Selenium Standalone for Home Assistant
 
-![Selenium Logo](logo.svg)
-
 A Home Assistant add-on that provides Selenium Standalone with Chromium as a shared service for other add-ons and integrations.
 
 ## About

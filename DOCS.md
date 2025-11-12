@@ -1,7 +1,5 @@
 # Selenium Standalone Add-on Documentation
 
-![Selenium Logo](logo.svg)
-
 ## Selenium WebDriver URL
 
 Once the add-on is running, use this URL:
