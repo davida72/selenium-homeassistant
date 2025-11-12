@@ -4,15 +4,13 @@ FROM selenium/standalone-chromium:latest
 USER root
 
 # Set environment variables for optimization
-ENV SE_NODE_MAX_SESSIONS=3 \
-    SE_NODE_SESSION_TIMEOUT=300 \
-    SE_SCREEN_WIDTH=1920 \
+# Note: SE_NODE_MAX_SESSIONS, SE_NODE_SESSION_TIMEOUT, and JAVA_OPTS are set dynamically in run.sh
+ENV SE_SCREEN_WIDTH=1920 \
     SE_SCREEN_HEIGHT=1080 \
     SE_SCREEN_DEPTH=24 \
     SE_START_XVFB=true \
     SE_VNC_NO_PASSWORD=1 \
-    SE_OPTS="--log-level WARNING" \
-    JAVA_OPTS="-Xmx512m -Xms256m"
+    SE_OPTS="--log-level WARNING"
 
 # Install required packages for Home Assistant add-on compatibility
 RUN apt-get update && \

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2025-11-12
+
+### Added
+- **Configurable resource settings** - Added max_sessions, session_timeout, and java_max_memory configuration options
+- Hardware-specific recommendations in documentation for optimal performance
+
+### Changed (Breaking)
+- **Default max_sessions reduced** - Changed from 3 to 2 for better compatibility with lower-spec hardware (Raspberry Pi, mini PCs)
+- **Default Java memory adjusted** - Changed from 512MB to 384MB for broader hardware compatibility
+- All resource settings now configurable instead of hardcoded
+
+### Documentation
+- Added detailed configuration recommendations by hardware type
+- Added configuration ranges and use cases for each setting
+
 ## [1.3.0] - 2025-11-12
 
 ### Added

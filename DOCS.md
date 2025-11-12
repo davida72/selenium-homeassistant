@@ -84,13 +84,59 @@ Controls whether a password is required to view browser sessions via NoVNC.
 - **OFF (Default)**: No password required - access sessions immediately
 - **ON**: Password required (default password is `secret`)
 
-**To change this setting:**
-1. Toggle the option in the Configuration tab
-2. Click **Save**
-3. Go to the Info tab and click **Restart**
-4. Wait for the add-on to restart (10-15 seconds)
+### max_sessions
 
-**No reinstall required** - just restart the add-on for the new password setting to take effect.
+**Default: 2**
+
+Maximum number of concurrent browser sessions. More sessions use more memory and CPU.
+
+**Range**: 1-10
+
+**Recommendations by hardware:**
+- **High-end x86 (8GB+ RAM)**: 3-5 sessions
+- **Standard x86 (4GB RAM)**: 2-3 sessions
+- **Raspberry Pi 4 (4GB+)**: 2 sessions (default)
+- **Raspberry Pi 4 (2GB)**: 1 session
+- **Raspberry Pi 3 or older**: 1 session
+
+### session_timeout
+
+**Default: 300 seconds (5 minutes)**
+
+How long idle sessions stay open before being automatically closed. This prevents memory leaks from abandoned sessions.
+
+**Range**: 60-3600 seconds (1 minute to 1 hour)
+
+**Recommendations:**
+- **Short-running scripts**: 300s (default) - good balance
+- **Long-running automation**: 600-1800s (10-30 minutes)
+- **Development/debugging**: 1800-3600s (30-60 minutes)
+
+### java_max_memory
+
+**Default: 384 MB**
+
+Maximum Java heap size for the Selenium server. Lower values reduce memory usage but may impact performance with multiple sessions.
+
+**Range**: 128-2048 MB
+
+**Recommendations by hardware:**
+- **High-end x86 (8GB+ RAM)**: 512-768 MB
+- **Standard x86 (4GB RAM)**: 384-512 MB (default)
+- **Raspberry Pi 4 (4GB+)**: 384 MB (default)
+- **Raspberry Pi 4 (2GB)**: 256 MB
+- **Raspberry Pi 3 or older**: 256 MB
+
+### Applying Configuration Changes
+
+**To change settings:**
+1. Go to the Configuration tab
+2. Adjust the values
+3. Click **Save**
+4. Go to the Info tab and click **Restart**
+5. Wait for the add-on to restart (10-15 seconds)
+
+**No reinstall required** - just restart the add-on for new settings to take effect.
 
 ### Viewing Browser Sessions
 
@@ -185,14 +231,16 @@ This add-on uses **Chromium** rather than Google Chrome for several key advantag
 
 **Typical real-world usage**: 300-500MB with 1-2 active sessions
 
-### Pre-configured Optimizations
+### Default Resource Settings
 
-The add-on is configured for minimal resource consumption:
+The add-on defaults are optimized for broad hardware compatibility:
 
-- **Max Sessions**: 3 concurrent browser sessions maximum
-- **Session Timeout**: 300 seconds - closes idle sessions after 5 minutes
-- **Java Memory**: 256-512MB - caps Java heap size
+- **Max Sessions**: 2 concurrent browser sessions (configurable 1-10)
+- **Session Timeout**: 300 seconds - closes idle sessions after 5 minutes (configurable 60-3600s)
+- **Java Max Memory**: 384MB - caps Java heap size (configurable 128-2048 MB)
 - **Log Level**: WARNING - reduces log overhead
+
+All resource settings are configurable via the Configuration tab to optimize for your specific hardware.
 
 ### Automatic Updates
 

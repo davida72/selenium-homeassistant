@@ -73,36 +73,54 @@ This is useful for debugging scripts and watching automation run.
 
 ## Configuration
 
+The add-on provides several configurable options to optimize performance for your hardware:
+
 ### Use password to view Selenium sessions
+**Default: OFF** - No password required to view browser sessions
 
-**Default: OFF (no password required)**
+### max_sessions
+**Default: 2** - Maximum concurrent browser sessions (range: 1-10)
 
-If you want to require a password before viewing browser sessions:
+**Recommendations:**
+- High-end x86: 3-5 sessions
+- Standard x86: 2-3 sessions
+- Raspberry Pi 4 (4GB+): 2 sessions
+- Raspberry Pi 4 (2GB) or Pi 3: 1 session
 
-- **OFF (Default)**: No password needed - open the viewer instantly
-- **ON**: Password required (default password is `secret`)
+### session_timeout
+**Default: 300 seconds** - Auto-close idle sessions (range: 60-3600s)
 
-**To change**: Toggle the setting, save, then restart the add-on (no reinstall needed).
+### java_max_memory
+**Default: 384 MB** - Maximum Java heap size (range: 128-2048 MB)
+
+**Recommendations:**
+- High-end x86: 512-768 MB
+- Standard hardware: 384 MB (default)
+- Raspberry Pi 2GB or older: 256 MB
+
+**To configure:** Go to Configuration tab, adjust values, save, then restart the add-on.
 
 ## Resource Optimization
 
-This add-on is optimized for low resource usage:
+This add-on is optimized for low resource usage and configurable for different hardware:
 
 ### Memory Usage
 - **Idle**: ~100-200MB (server running, no sessions)
-- **Active (1-2 sessions)**: ~300-500MB (typical usage)
-- **Max (3 sessions)**: ~400MB-1GB (all sessions active)
+- **Active (1-2 sessions)**: ~300-500MB (typical usage with default settings)
+- **Max (multiple sessions)**: Scales with number of sessions and java_max_memory setting
 
 ### Disk Space
-- **Docker Image**: ~1.2GB (includes Chromium browser and Selenium)
+- **Docker Image**: ~1.2GB (x86), ~1.5-2GB (ARM/Raspberry Pi)
 - **Runtime Data**: Minimal (~10-50MB for logs and temporary files)
-- **Total**: ~1.3GB disk space required
+- **Total**: ~1.3GB (x86) or ~1.7GB (ARM) disk space required
 
-### Configuration
-- **Max Sessions**: 3 concurrent sessions
-- **Session Timeout**: 300 seconds (5 minutes)
-- **Java Memory**: 256MB min, 512MB max
+### Default Configuration (Optimized for Broad Compatibility)
+- **Max Sessions**: 2 (configurable 1-10)
+- **Session Timeout**: 300 seconds / 5 minutes (configurable 60-3600s)
+- **Java Max Memory**: 384MB (configurable 128-2048 MB)
 - **Log Level**: WARNING (reduced logging overhead)
+
+All settings except log level are configurable via the Configuration tab to optimize for your specific hardware.
 
 ## Technical Details
 

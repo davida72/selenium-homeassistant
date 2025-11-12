@@ -4,12 +4,23 @@ set -e
 # Read configuration from Home Assistant
 CONFIG_PATH="/data/options.json"
 
-# Read VNC password option (default to false = no password required)
+# Read configuration options with defaults
 VNC_PASSWORD_REQUIRED="false"
+MAX_SESSIONS="2"
+SESSION_TIMEOUT="300"
+JAVA_MAX_MEMORY="384"
 
 if [ -f "$CONFIG_PATH" ]; then
     VNC_PASSWORD_REQUIRED=$(jq -r '.["Use password to view Selenium sessions"] // false' $CONFIG_PATH)
+    MAX_SESSIONS=$(jq -r '.max_sessions // 2' $CONFIG_PATH)
+    SESSION_TIMEOUT=$(jq -r '.session_timeout // 300' $CONFIG_PATH)
+    JAVA_MAX_MEMORY=$(jq -r '.java_max_memory // 384' $CONFIG_PATH)
 fi
+
+# Set Selenium environment variables based on configuration
+export SE_NODE_MAX_SESSIONS="$MAX_SESSIONS"
+export SE_NODE_SESSION_TIMEOUT="$SESSION_TIMEOUT"
+export JAVA_OPTS="-Xmx${JAVA_MAX_MEMORY}m -Xms256m"
 
 # Always enable VNC and NoVNC for session viewing
 export SE_START_VNC="true"
@@ -29,9 +40,9 @@ fi
 echo ""
 echo "Starting Selenium Standalone..."
 echo "Configuration:"
-echo "  Max Sessions: ${SE_NODE_MAX_SESSIONS}"
-echo "  Session Timeout: ${SE_NODE_SESSION_TIMEOUT}s"
-echo "  Java Memory: ${JAVA_OPTS}"
+echo "  Max Sessions: ${MAX_SESSIONS}"
+echo "  Session Timeout: ${SESSION_TIMEOUT}s"
+echo "  Java Max Memory: ${JAVA_MAX_MEMORY}MB"
 echo "  VNC Password: ${VNC_PASSWORD_STATUS}"
 echo ""
 

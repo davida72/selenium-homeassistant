@@ -1,5 +1,5 @@
 name: Selenium Standalone
-version: "1.3.0"
+version: "1.3.1"
 slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:
@@ -24,5 +24,11 @@ apparmor: false
 init: false
 options:
   Use password to view Selenium sessions: false
+  max_sessions: 2
+  session_timeout: 300
+  java_max_memory: 384
 schema:
   Use password to view Selenium sessions: bool
+  max_sessions: int(1,10)
+  session_timeout: int(60,3600)
+  java_max_memory: int(128,2048)
