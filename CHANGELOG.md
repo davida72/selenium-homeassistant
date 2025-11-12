@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] - 2025-11-12
+
+### Fixed
+- **Critical: IP detection showing Docker IP** - Now uses Supervisor API to get actual host IP instead of container IP (fixes 172.30.x.x showing instead of 192.168.x.x)
+- **Improved fallback methods** - Gateway-based detection and explicit Docker IP range exclusion (172.17-31.x.x)
+
 ## [1.2.2] - 2025-11-12
 
 ### Changed
@@ -16,8 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Better table formatting** - Converted tables to bullet lists for improved rendering in Home Assistant
 
 ### Fixed
-- **Critical: IP detection showing Docker IP** - Now uses Supervisor API to get actual host IP instead of container IP (fixes 172.30.x.x showing instead of 192.168.x.x)
-- **Improved fallback methods** - Gateway-based detection and explicit Docker IP range exclusion (172.17-31.x.x)
 - **Readable config label** - Changed option key from "vnc_password_required" to "Use password to view Selenium sessions"
 - **Box alignment** - Adjusted separator line to 46 characters for consistent formatting
 
