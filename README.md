@@ -108,8 +108,32 @@ This add-on is optimized for low resource usage:
 
 - **Base Image**: selenium/standalone-chromium:latest
 - **Port**: 4444 (WebDriver API)
-- **Architecture Support**: amd64, aarch64, armv7
+- **Architecture Support**:
+  - **amd64** (Intel/AMD x86-64)
+  - **aarch64** (Raspberry Pi 4/5, 64-bit ARM)
+  - **armv7** (Raspberry Pi 3/2, 32-bit ARM)
 - **Startup**: Automatically starts with Home Assistant services
+
+### Raspberry Pi Support
+
+Fully compatible with Raspberry Pi hardware:
+
+**Supported Models:**
+- Raspberry Pi 4/5 (recommended)
+- Raspberry Pi 3
+- Raspberry Pi 2
+
+**System Requirements:**
+- **Minimum**: 2GB RAM
+- **Recommended**: 4GB+ RAM for optimal performance
+- **Disk Space**: ~1.5-2GB for ARM images
+- **SD Card**: Class 10 or better
+
+**Performance:**
+- Fully functional for typical automation tasks
+- Slower than x86 hardware but handles web scraping and automation well
+- Pi 4 with 4GB+ RAM performs best
+- Consider reducing max sessions to 2 on older models (Pi 2/3)
 
 ## Support
 

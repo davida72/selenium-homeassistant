@@ -4,6 +4,8 @@ slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:
   - amd64
+  - aarch64
+  - armv7
 url: https://github.com/davida72/selenium-homeassistant
 startup: services
 boot: auto

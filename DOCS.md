@@ -204,6 +204,27 @@ The add-on is configured for minimal resource consumption:
 
 **Note**: Simply restarting the add-on uses the existing Docker image. To get updates, you need to rebuild (uninstall and reinstall) the add-on.
 
+### Raspberry Pi Support
+
+This add-on fully supports Raspberry Pi hardware:
+
+**Supported Models:**
+- Raspberry Pi 4/5 (aarch64 - 64-bit ARM) - **Recommended**
+- Raspberry Pi 3 (aarch64/armv7)
+- Raspberry Pi 2 (armv7)
+
+**System Requirements:**
+- **Minimum**: 2GB RAM
+- **Recommended**: 4GB+ RAM for best performance
+- **Disk Space**: ~1.5-2GB for ARM images
+- **SD Card**: Class 10 or better recommended
+
+**Performance Considerations:**
+- Browser automation will be slower than x86 hardware but fully functional
+- Pi 4 with 4GB+ RAM handles typical automation tasks well
+- Older models (Pi 2/3) may experience slower browser startup
+- Consider reducing max sessions to 2 on Pi 3 or older for better performance
+
 ## Troubleshooting
 
 ### Add-on won't start

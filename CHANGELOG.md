@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0] - 2025-11-12
 
+### Added
+- **Raspberry Pi support** - Now supports aarch64 (Pi 4/5) and armv7 (Pi 2/3) architectures
+- **Raspberry Pi documentation** - Added system requirements, performance notes, and recommendations
+- ARM images use seleniarm for full Chromium compatibility on Raspberry Pi hardware
+
 ### Changed
 - **Release preparation** - Cleaned up documentation and improved user experience for stable release
 - **Reordered log output** - SELENIUM URL now appears last (after NoVNC) before "Selenium Standalone is ready!" for better visibility
@@ -18,10 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all references from specific IPs (192.168.x.x) to generic placeholder "YOUR_HOME_ASSISTANT_IP"
 - Clarified that localhost:4444 is the primary URL for internal Home Assistant use
 - README and DOCS now consistently show placeholder format
+- Added comprehensive Raspberry Pi support section with model compatibility and performance expectations
 
 ### Technical
+- Multi-architecture support: amd64, aarch64, armv7
 - Cleaner Docker image with only essential packages (jq for config parsing)
 - Simpler, faster IP detection using only hostname command
+- Disk space: ~1.2GB (x86), ~1.5-2GB (ARM)
 
 ## [1.2.9] - 2025-11-12
 
