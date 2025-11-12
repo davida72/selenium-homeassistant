@@ -43,19 +43,29 @@ SELENIUM_PID=$!
 sleep 5
 
 # Get the Home Assistant host IP address
-# Try supervisor API first, fallback to hostname resolution
-if command -v curl >/dev/null 2>&1; then
-    IP_ADDRESS=$(curl -s http://supervisor/network/info -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" 2>/dev/null | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
-fi
+# Try multiple methods to get the real IP
 
-# Fallback: try to get from hostname resolution or default gateway route
-if [ -z "$IP_ADDRESS" ] || [ "$IP_ADDRESS" = "null" ]; then
-    IP_ADDRESS=$(ip route get 1 2>/dev/null | awk '{print $7; exit}')
-fi
+# Method 1: Try hostname command
+IP_ADDRESS=$(hostname -I 2>/dev/null | awk '{print $1}' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.')
 
-# Final fallback
+# Method 2: Try ip route
 if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS="<check_your_network>"
+    IP_ADDRESS=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \K[^ ]+' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.')
+fi
+
+# Method 3: Try default gateway route
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS=$(ip -4 addr show 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.' | head -1)
+fi
+
+# Final fallback - get first non-loopback IP
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS=$(hostname -I 2>/dev/null | awk '{print $1}')
+fi
+
+# If still nothing, show placeholder
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS="YOUR_IP_ADDRESS"
 fi
 
 echo ""
