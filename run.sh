@@ -43,56 +43,20 @@ SELENIUM_PID=$!
 sleep 5
 
 # Get the Home Assistant host IP address
+# Use simple, fast methods only - no hanging!
 IP_ADDRESS=""
 
-# Method 1: Query Supervisor for Home Assistant Core info (gets the actual HA URL)
-if [ -n "$SUPERVISOR_TOKEN" ]; then
-    # Get Home Assistant info which includes the IP it's running on
-    HA_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/core/info 2>/dev/null)
-    # Try to extract IP from various fields
-    if [ -n "$HA_INFO" ]; then
-        # Try getting from the host field
-        IP_ADDRESS=$(echo "$HA_INFO" | jq -r '.data.ip_address // empty' 2>/dev/null)
+# Method 1: Simple hostname command, filter out Docker IPs
+IP_ADDRESS=$(hostname -I 2>/dev/null | awk '{print $1}')
 
-        # If that didn't work, try getting from network interfaces
-        if [ -z "$IP_ADDRESS" ]; then
-            NETWORK_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null)
-            # Get the primary interface IP
-            IP_ADDRESS=$(echo "$NETWORK_INFO" | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
-        fi
-
-        # If still nothing, try getting host info
-        if [ -z "$IP_ADDRESS" ]; then
-            HOST_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/host/info 2>/dev/null)
-            IP_ADDRESS=$(echo "$HOST_INFO" | jq -r '.data.ip_address // empty' 2>/dev/null)
-        fi
-    fi
+# Filter out common Docker/loopback ranges
+if echo "$IP_ADDRESS" | grep -qE '^(127\.|172\.([1-2][0-9]|3[0-1])\.|169\.254\.)'; then
+    IP_ADDRESS=""
 fi
 
-# Method 2: Parse /proc/net/route to find default gateway, then find IP on same network
-if [ -z "$IP_ADDRESS" ] && [ -f /proc/net/route ]; then
-    # Get default gateway from routing table
-    GATEWAY_HEX=$(awk '/^[^\t]+\t00000000\t/ {print $3}' /proc/net/route 2>/dev/null | head -1)
-    if [ -n "$GATEWAY_HEX" ]; then
-        # Convert hex to decimal IP (reverse byte order)
-        GATEWAY=$(printf "%d.%d.%d.%d" 0x${GATEWAY_HEX:6:2} 0x${GATEWAY_HEX:4:2} 0x${GATEWAY_HEX:2:2} 0x${GATEWAY_HEX:0:2} 2>/dev/null)
-        if [ -n "$GATEWAY" ]; then
-            # Get network prefix (first 3 octets)
-            NETWORK_PREFIX=$(echo "$GATEWAY" | cut -d. -f1-3)
-            # Find IP on same network
-            IP_ADDRESS=$(ip addr 2>/dev/null | grep -oP "inet ${NETWORK_PREFIX}\.\d+" | head -1 | awk '{print $2}')
-        fi
-    fi
-fi
-
-# Method 3: Try hostname command and filter out Docker/loopback IPs
+# Method 2: If that didn't work, just show placeholder
 if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(hostname -I 2>/dev/null | tr ' ' '\n' | grep -v '^127\.' | grep -v '^172\.[1-3][0-9]\.' | grep -v '^169\.254\.' | head -1)
-fi
-
-# Final fallback
-if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS="YOUR_IP_ADDRESS"
+    IP_ADDRESS="YOUR_HOME_ASSISTANT_IP"
 fi
 
 echo ""
