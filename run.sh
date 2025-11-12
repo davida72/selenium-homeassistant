@@ -26,27 +26,50 @@ else
     VNC_PASSWORD_STATUS="DISABLED (no password required)"
 fi
 
-# Get the IP address for display
-IP_ADDRESS=$(hostname -I | awk '{print $1}')
-
 echo ""
-echo "**********************************************"
-echo "* Selenium URL: http://localhost:4444/       *"
-echo "*           or: http://${IP_ADDRESS}:4444/ *"
-echo "**********************************************"
-echo ""
-echo "NoVNC Session Viewer:"
-echo "  http://localhost:7900/"
-echo "  http://${IP_ADDRESS}:7900/"
-echo "  Password: ${VNC_PASSWORD_STATUS}"
-echo ""
+echo "Starting Selenium Standalone..."
 echo "Configuration:"
 echo "  Max Sessions: ${SE_NODE_MAX_SESSIONS}"
 echo "  Session Timeout: ${SE_NODE_SESSION_TIMEOUT}s"
 echo "  Java Memory: ${JAVA_OPTS}"
-echo ""
-echo "Selenium Standalone Service Started"
+echo "  VNC Password: ${VNC_PASSWORD_STATUS}"
 echo ""
 
-# Start Selenium Server using the original entry point
-exec /opt/bin/entry_point.sh
+# Start Selenium Server in background
+/opt/bin/entry_point.sh &
+SELENIUM_PID=$!
+
+# Wait for Selenium to start up
+sleep 5
+
+# Get the Home Assistant host IP address
+# Try supervisor API first, fallback to hostname resolution
+if command -v curl >/dev/null 2>&1; then
+    IP_ADDRESS=$(curl -s http://supervisor/network/info -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" 2>/dev/null | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
+fi
+
+# Fallback: try to get from hostname resolution or default gateway route
+if [ -z "$IP_ADDRESS" ] || [ "$IP_ADDRESS" = "null" ]; then
+    IP_ADDRESS=$(ip route get 1 2>/dev/null | awk '{print $7; exit}')
+fi
+
+# Final fallback
+if [ -z "$IP_ADDRESS" ]; then
+    IP_ADDRESS="<check_your_network>"
+fi
+
+echo ""
+echo "=========================================================="
+echo "  SELENIUM URL: http://localhost:4444/"
+echo "            or: http://${IP_ADDRESS}:4444/"
+echo "=========================================================="
+echo ""
+echo "NoVNC Session Viewer:"
+echo "  http://localhost:7900/"
+echo "  http://${IP_ADDRESS}:7900/"
+echo ""
+echo "Selenium Standalone is ready!"
+echo ""
+
+# Wait for Selenium process to finish
+wait $SELENIUM_PID

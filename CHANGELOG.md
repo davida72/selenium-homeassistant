@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-11-12
+
+### Fixed
+- **Correct IP detection**: Now uses Home Assistant Supervisor API to get real host IP (192.168.*.*) instead of Docker internal IP (172.30.*)
+- **URL display timing**: URLs now shown at END of logs after Selenium starts, eliminating need to scroll up
+- **Box alignment**: Reduced separator line length from 72 to 58 characters for better proportions
+
+### Changed
+- **Improved config label**: Changed from "vnc_password_required" to "Use password to view Selenium sessions" with helpful description
+- **Better startup flow**: Selenium starts in background, then displays URLs once fully ready
+- **Enhanced documentation**: Added embedded Selenium logo to Documentation page using base64 data URI
+
+### Technical
+- Uses supervisor API endpoint for accurate IP detection with fallback to ip route
+- 5-second wait after Selenium start before displaying URLs
+- Config schema now includes name and description fields for better UX
+
 ## [1.1.3] - 2025-11-12
 
 ### Fixed
