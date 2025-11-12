@@ -1,5 +1,4 @@
-ARG BUILD_FROM=selenium/standalone-chromium:latest
-FROM ${BUILD_FROM}
+FROM selenium/standalone-chromium:latest
 
 # Switch to root to install packages and configure
 USER root
