@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-11-12
+
+### Fixed
+- **Critical: Add-on not appearing in store** - Fixed invalid schema format that prevented Home Assistant from loading the add-on
+- Reverted schema to simple `bool` format for compatibility
+- Updated maintainer to David Amor
+
 ## [1.2.0] - 2025-11-12
 
 ### Fixed

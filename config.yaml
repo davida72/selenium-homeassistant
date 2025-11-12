@@ -1,5 +1,5 @@
 name: Selenium Standalone
-version: "1.2.0"
+version: "1.2.1"
 slug: selenium-standalone
 description: Selenium Standalone service for Home Assistant add-ons
 arch:
@@ -23,9 +23,4 @@ init: false
 options:
   vnc_password_required: false
 schema:
-  vnc_password_required:
-    name: "Use password to view Selenium sessions"
-    description: "Enable to require password 'secret' for NoVNC viewer. Restart required after changing."
-    required: false
-    default: false
-    type: bool
+  vnc_password_required: bool
