@@ -48,7 +48,7 @@ IP_ADDRESS=""
 # Method 1: Query Supervisor for Home Assistant Core info (gets the actual HA URL)
 if [ -n "$SUPERVISOR_TOKEN" ]; then
     # Get Home Assistant info which includes the IP it's running on
-    HA_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/core/info 2>/dev/null)
+    HA_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/core/info 2>/dev/null)
     # Try to extract IP from various fields
     if [ -n "$HA_INFO" ]; then
         # Try getting from the host field
@@ -56,14 +56,14 @@ if [ -n "$SUPERVISOR_TOKEN" ]; then
 
         # If that didn't work, try getting from network interfaces
         if [ -z "$IP_ADDRESS" ]; then
-            NETWORK_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null)
+            NETWORK_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info 2>/dev/null)
             # Get the primary interface IP
             IP_ADDRESS=$(echo "$NETWORK_INFO" | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[0]' 2>/dev/null | cut -d'/' -f1)
         fi
 
         # If still nothing, try getting host info
         if [ -z "$IP_ADDRESS" ]; then
-            HOST_INFO=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/host/info 2>/dev/null)
+            HOST_INFO=$(curl -s --max-time 3 -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/host/info 2>/dev/null)
             IP_ADDRESS=$(echo "$HOST_INFO" | jq -r '.data.ip_address // empty' 2>/dev/null)
         fi
     fi
