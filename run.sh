@@ -43,24 +43,23 @@ SELENIUM_PID=$!
 sleep 5
 
 # Get the Home Assistant host IP address
-# Try multiple methods to get the real IP
+# Method 1: Use Supervisor API (best method for Home Assistant add-ons)
+IP_ADDRESS=$(curl -s -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" http://supervisor/network/info | jq -r '.data.interfaces[] | select(.primary == true) | .ipv4.address[] | split("/")[0]' 2>/dev/null | head -1)
 
-# Method 1: Try hostname command
-IP_ADDRESS=$(hostname -I 2>/dev/null | awk '{print $1}' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.')
-
-# Method 2: Try ip route
+# Method 2: Try to get default gateway and use its network
 if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(ip route get 1.1.1.1 2>/dev/null | grep -oP 'src \K[^ ]+' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.')
+    GATEWAY=$(ip route | grep default | awk '{print $3}' | head -1)
+    if [ -n "$GATEWAY" ]; then
+        # Extract the first 3 octets from gateway (e.g., 192.168.200 from 192.168.200.1)
+        NETWORK_PREFIX=$(echo "$GATEWAY" | cut -d. -f1-3)
+        # Get IP from same network, excluding Docker networks (172.17-31.x.x)
+        IP_ADDRESS=$(ip -4 addr show | grep -oP "(?<=inet\s)${NETWORK_PREFIX}\.\d+" | head -1)
+    fi
 fi
 
-# Method 3: Try default gateway route
+# Method 3: Get first non-Docker, non-loopback IP
 if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(ip -4 addr show 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | grep -E '^192\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\.' | head -1)
-fi
-
-# Final fallback - get first non-loopback IP
-if [ -z "$IP_ADDRESS" ]; then
-    IP_ADDRESS=$(hostname -I 2>/dev/null | awk '{print $1}')
+    IP_ADDRESS=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v '127.0.0.1' | grep -v '^172\.(1[7-9]|2[0-9]|3[0-1])\.' | grep -E '^192\.|^10\.' | head -1)
 fi
 
 # If still nothing, show placeholder
