@@ -1,0 +1,11 @@
+build_from:
+  amd64: selenium/standalone-chromium:latest
+  aarch64: seleniarm/standalone-chromium:latest
+  armv7: seleniarm/standalone-chromium:latest
+labels:
+  org.opencontainers.image.title: "Selenium Standalone"
+  org.opencontainers.image.description: "Selenium Standalone service for Home Assistant"
+  org.opencontainers.image.source: "https://github.com/davida72/selenium-homeassistant"
+  org.opencontainers.image.licenses: "MIT"
+args:
+  BUILD_FROM: null

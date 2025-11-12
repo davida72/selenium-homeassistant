@@ -1,0 +1,31 @@
+name: Selenium Standalone
+version: "1.0.0"
+slug: selenium-standalone
+description: Selenium Standalone service for Home Assistant add-ons
+arch:
+  - amd64
+  - aarch64
+  - armv7
+url: https://github.com/davida72/selenium-homeassistant
+startup: services
+boot: auto
+ports:
+  4444/tcp: 4444
+  5900/tcp: 5900
+  7900/tcp: 7900
+ports_description:
+  4444/tcp: Selenium WebDriver API
+  5900/tcp: VNC Server (for session viewing)
+  7900/tcp: NoVNC Web Interface (browser-based session viewing)
+host_network: false
+privileged:
+  - SYS_ADMIN
+apparmor: false
+init: false
+options:
+  enable_vnc: false
+  enable_novnc: false
+schema:
+  enable_vnc: bool
+  enable_novnc: bool
+image: ghcr.io/davida72/{arch}-selenium-standalone
