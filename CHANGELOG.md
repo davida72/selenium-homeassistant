@@ -14,11 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed (Breaking)
 - **Default max_sessions reduced** - Changed from 3 to 2 for better compatibility with lower-spec hardware (Raspberry Pi, mini PCs)
 - **Default Java memory adjusted** - Changed from 512MB to 384MB for broader hardware compatibility
+- **Architecture support aligned with Home Assistant** - Removed armv7 (Pi 2/3) support; focuses on Pi 4/5 which are Home Assistant's minimum requirements
 - All resource settings now configurable instead of hardcoded
 
 ### Documentation
 - Added detailed configuration recommendations by hardware type
 - Added configuration ranges and use cases for each setting
+- Clarified Raspberry Pi support matches Home Assistant's hardware requirements (Pi 4/5 only)
 
 ## [1.3.0] - 2025-11-12
 

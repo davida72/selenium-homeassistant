@@ -82,10 +82,10 @@ The add-on provides several configurable options to optimize performance for you
 **Default: 2** - Maximum concurrent browser sessions (range: 1-10)
 
 **Recommendations:**
-- High-end x86: 3-5 sessions
-- Standard x86: 2-3 sessions
-- Raspberry Pi 4 (4GB+): 2 sessions
-- Raspberry Pi 4 (2GB) or Pi 3: 1 session
+- High-end x86 (8GB+ RAM): 3-5 sessions
+- Standard x86 (4GB RAM): 2-3 sessions
+- Raspberry Pi 4/5 (4GB+): 2 sessions (default)
+- Raspberry Pi 4 (2GB): 1 session
 
 ### session_timeout
 **Default: 300 seconds** - Auto-close idle sessions (range: 60-3600s)
@@ -94,9 +94,9 @@ The add-on provides several configurable options to optimize performance for you
 **Default: 384 MB** - Maximum Java heap size (range: 128-2048 MB)
 
 **Recommendations:**
-- High-end x86: 512-768 MB
+- High-end x86 (8GB+ RAM): 512-768 MB
 - Standard hardware: 384 MB (default)
-- Raspberry Pi 2GB or older: 256 MB
+- Raspberry Pi 4 (2GB): 256 MB
 
 **To configure:** Go to Configuration tab, adjust values, save, then restart the add-on.
 
@@ -128,30 +128,28 @@ All settings except log level are configurable via the Configuration tab to opti
 - **Port**: 4444 (WebDriver API)
 - **Architecture Support**:
   - **amd64** (Intel/AMD x86-64)
-  - **aarch64** (Raspberry Pi 4/5, 64-bit ARM)
-  - **armv7** (Raspberry Pi 3/2, 32-bit ARM)
+  - **aarch64** (Raspberry Pi 4/5, ARM 64-bit)
 - **Startup**: Automatically starts with Home Assistant services
 
 ### Raspberry Pi Support
 
-Fully compatible with Raspberry Pi hardware:
+Compatible with Raspberry Pi models that support Home Assistant:
 
 **Supported Models:**
-- Raspberry Pi 4/5 (recommended)
-- Raspberry Pi 3
-- Raspberry Pi 2
+- Raspberry Pi 5 (recommended)
+- Raspberry Pi 4
 
 **System Requirements:**
-- **Minimum**: 2GB RAM
-- **Recommended**: 4GB+ RAM for optimal performance
+- **Minimum**: Raspberry Pi 4 with 2GB RAM
+- **Recommended**: Raspberry Pi 4/5 with 4GB+ RAM for optimal performance
 - **Disk Space**: ~1.5-2GB for ARM images
-- **SD Card**: Class 10 or better
+- **SD Card**: Class 10 or better (A2-rated recommended)
 
 **Performance:**
 - Fully functional for typical automation tasks
 - Slower than x86 hardware but handles web scraping and automation well
-- Pi 4 with 4GB+ RAM performs best
-- Consider reducing max sessions to 2 on older models (Pi 2/3)
+- Pi 4 with 4GB+ RAM handles default settings perfectly
+- Pi 4 with 2GB RAM: reduce to 1 session, 256MB Java memory
 
 ## Support
 

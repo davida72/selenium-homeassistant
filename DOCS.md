@@ -95,9 +95,8 @@ Maximum number of concurrent browser sessions. More sessions use more memory and
 **Recommendations by hardware:**
 - **High-end x86 (8GB+ RAM)**: 3-5 sessions
 - **Standard x86 (4GB RAM)**: 2-3 sessions
-- **Raspberry Pi 4 (4GB+)**: 2 sessions (default)
+- **Raspberry Pi 4/5 (4GB+)**: 2 sessions (default)
 - **Raspberry Pi 4 (2GB)**: 1 session
-- **Raspberry Pi 3 or older**: 1 session
 
 ### session_timeout
 
@@ -123,9 +122,8 @@ Maximum Java heap size for the Selenium server. Lower values reduce memory usage
 **Recommendations by hardware:**
 - **High-end x86 (8GB+ RAM)**: 512-768 MB
 - **Standard x86 (4GB RAM)**: 384-512 MB (default)
-- **Raspberry Pi 4 (4GB+)**: 384 MB (default)
+- **Raspberry Pi 4/5 (4GB+)**: 384 MB (default)
 - **Raspberry Pi 4 (2GB)**: 256 MB
-- **Raspberry Pi 3 or older**: 256 MB
 
 ### Applying Configuration Changes
 
@@ -254,24 +252,29 @@ All resource settings are configurable via the Configuration tab to optimize for
 
 ### Raspberry Pi Support
 
-This add-on fully supports Raspberry Pi hardware:
+This add-on supports Raspberry Pi models that run Home Assistant:
 
-**Supported Models:**
-- Raspberry Pi 4/5 (aarch64 - 64-bit ARM) - **Recommended**
-- Raspberry Pi 3 (aarch64/armv7)
-- Raspberry Pi 2 (armv7)
+```
+┌─────────────┬──────────────┬────────┬────────────────┬─────────────────────────────────────┐
+│ Model       │ Architecture │ RAM    │ Status         │ Recommended Settings                │
+├─────────────┼──────────────┼────────┼────────────────┼─────────────────────────────────────┤
+│ Pi 5 (4GB+) │ aarch64      │ 4GB+   │ ✅ Excellent   │ 2 sessions, 384MB Java              │
+│ Pi 4 (4GB+) │ aarch64      │ 4GB+   │ ✅ Excellent   │ 2 sessions, 384MB Java (default)    │
+│ Pi 4 (2GB)  │ aarch64      │ 2GB    │ ✅ Good        │ 1 session, 256MB Java               │
+└─────────────┴──────────────┴────────┴────────────────┴─────────────────────────────────────┘
+```
 
 **System Requirements:**
-- **Minimum**: 2GB RAM
-- **Recommended**: 4GB+ RAM for best performance
+- **Minimum**: Raspberry Pi 4 with 2GB RAM
+- **Recommended**: Raspberry Pi 4/5 with 4GB+ RAM for best performance
 - **Disk Space**: ~1.5-2GB for ARM images
-- **SD Card**: Class 10 or better recommended
+- **SD Card**: Class 10 or better (A2-rated recommended)
 
 **Performance Considerations:**
 - Browser automation will be slower than x86 hardware but fully functional
-- Pi 4 with 4GB+ RAM handles typical automation tasks well
-- Older models (Pi 2/3) may experience slower browser startup
-- Consider reducing max sessions to 2 on Pi 3 or older for better performance
+- Pi 4/5 with 4GB+ RAM handles default settings perfectly
+- Pi 4 with 2GB RAM: reduce to 1 session and 256MB Java memory
+- Selenium on Raspberry Pi is ideal for periodic automation (UK Bin Collection, etc.)
 
 ## Troubleshooting
 
