@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-11-12
+
+### Fixed
+- Resized icon.png and logo.png to exactly 256x256 pixels for proper display in Home Assistant
+- Added official Selenium horizontal logo (logo.svg)
+- Fixed icon not appearing in Home Assistant add-on store
+
 ## [1.0.2] - 2025-11-12
 
 ### Fixed
