@@ -60,26 +60,29 @@ Use the IP address shown in your logs (e.g., `http://192.168.200.234:4444/`)
 When configuring the UK Bin Collection Data add-on:
 - **Selenium URL**: `http://localhost:4444/`
 
-### Viewing Browser Sessions
+### Watch Browser Sessions Live (Optional)
 
-The add-on includes NoVNC for watching browser sessions in real-time:
-- **From within Home Assistant**: `http://localhost:7900/`
+Want to see what Selenium is doing? Open this URL in your web browser to watch the automated browser in real-time:
+
+- **From Home Assistant**: `http://localhost:7900/`
 - **From your network**: Check logs for IP address (e.g., `http://192.168.200.234:7900/`)
 
-Open the NoVNC URL in your browser to watch Selenium sessions live.
+This is useful for debugging scripts and watching automation run.
+
+**By default, no password is required** - just open the URL and you'll see the browser immediately.
 
 ## Configuration
 
-### VNC Password Required
+### Use password to view Selenium sessions
 
 **Default: OFF (no password required)**
 
-Controls whether a password is needed to view browser sessions:
+If you want to require a password before viewing browser sessions:
 
-- **OFF (Default)**: No password - access NoVNC immediately
+- **OFF (Default)**: No password needed - open the viewer instantly
 - **ON**: Password required (default password is `secret`)
 
-**Note**: Restart the add-on after changing this setting.
+**To change**: Toggle the setting, save, then restart the add-on (no reinstall needed).
 
 ## Resource Optimization
 
